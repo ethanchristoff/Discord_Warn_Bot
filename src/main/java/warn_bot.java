@@ -20,6 +20,33 @@ public class warn_bot {
                 .setGuildOnly(true)
                 .queue();
 
+<<<<<<< Updated upstream
         jda.upsertCommand("check-warnings","checks the number of warnings you currently have").setGuildOnly(true).queue();
+=======
+        jda.upsertCommand("check-warnings","checks the number of warnings you currently have")
+                .addOption(OptionType.USER,"username","Mention the user to see how many warnings they have",true)
+                .setGuildOnly(true)
+                .queue();
+
+        jda.upsertCommand("ban","bans a user from a server for a set amount of time")
+                .addOption(OptionType.USER,"user_to_ban","Mention the user to ban",true)
+                .setGuildOnly(true)
+                .queue();
+
+        jda.upsertCommand("set-pref","Sets the base timeouts for users")
+                .addOption(OptionType.INTEGER,"first_warning_timeout","Sets the first timeout(secs)",true)
+                .addOption(OptionType.INTEGER,"second_warning_timeout","Sets the second timeout(mins)",true)
+                .addOption(OptionType.STRING,"default-warning-message","Sets the default warning message to the user",false)
+                .setGuildOnly(true)
+                .queue();
+
+        jda.upsertCommand("current-prefs","displays the current prefs and timeouts").setGuildOnly(true).queue();
+
+        jda.upsertCommand("roles","displays the current role you have")
+                .addOption(OptionType.ROLE,"assign-role","assigns a role to the user mentioned",true)
+                .addOption(OptionType.USER,"user-to-assign","include the user to assign the role to",true)
+                .setGuildOnly(true)
+                .queue();
+>>>>>>> Stashed changes
     }
 }

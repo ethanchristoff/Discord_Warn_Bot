@@ -36,7 +36,11 @@ public class interactionEventListener extends ListenerAdapter {
             output_msg_private("You are currently timed out from using the bot.");
             return;
         }
+<<<<<<< Updated upstream
         switch (slashName){
+=======
+        switch (slashName) {
+>>>>>>> Stashed changes
             case "warn":
                 warnings++;
                 String user = Objects.requireNonNull(event.getOption("username")).getAsUser().getName();
@@ -63,6 +67,30 @@ public class interactionEventListener extends ListenerAdapter {
                     default:
                         output_msg_private("You have "+warnings+" warnings.");
                 }
+<<<<<<< Updated upstream
+=======
+                break;
+
+            case "ban":
+                output_msg_public("WIP!!!");
+                break;
+
+            case "set-pref":
+                warning_1 = Objects.requireNonNull(event.getOption("first_warning_timeout")).getAsInt();
+                warning_2 = Objects.requireNonNull(event.getOption("second_warning_timeout")).getAsInt();
+                if (event.getOption("default-warning-message") != null)
+                    default_warning_msg = Objects.requireNonNull(event.getOption("default-warning-message")).getAsString();
+                output_msg_private("Preferences have been set!");
+                break;
+
+            case "current-prefs":
+                output_msg_private("Current timeouts:\n**warning 1**: " + warning_1 + " seconds\n**warning_2**: " + warning_2 + " minutes\n**Default Message**: " + default_warning_msg);
+                break;
+
+            case "roles":
+                output_msg_private(Objects.requireNonNull(event.getOption("role")).getAsRole().toString());
+                break;
+>>>>>>> Stashed changes
         }
     }
 }
