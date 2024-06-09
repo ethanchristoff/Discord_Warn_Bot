@@ -39,5 +39,11 @@ public class warn_bot {
                 .queue();
 
         jda.upsertCommand("current-prefs","displays the current prefs and timeouts").setGuildOnly(true).queue();
+
+        jda.upsertCommand("roles","assigns roles to users that each have unique permissions")
+                .addOption(OptionType.ROLE,"assign-role","role that is to be assigned",true)
+                .addOption(OptionType.USER,"user-to-assign","mentions the user to have a role assigned to",true)
+                .setGuildOnly(true)
+                .queue();
     }
 }
