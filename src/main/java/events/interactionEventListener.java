@@ -51,10 +51,11 @@ public class interactionEventListener extends ListenerAdapter {
                 warningMap.put(user, warnings);
 
                 String warning = event.getOption("warning") != null ? Objects.requireNonNull(event.getOption("warning")).getAsString() : "";
+                String mention = user.getAsMention(); // Get the mention tag
                 if (warning.isEmpty())
-                    output_msg_public("**" + user.getName() + "**" + " was warned | NO: **" + warnings + "** | MESSAGE: **" + default_warning_msg + "**");
+                    output_msg_public(mention + " was warned | NO: **" + warnings + "** | MESSAGE: **" + default_warning_msg + "**");
                 else
-                    output_msg_public("**" + user.getName() + "**" + " was warned | NO: **" + warnings + "** | MESSAGE: **" + warning + "**");
+                    output_msg_public(mention + " was warned | NO: **" + warnings + "** | MESSAGE: **" + warning + "**");
 
                 // 3 warnings and the user is timed out for 10 seconds, 10 warnings = 10 minutes
                 if (warnings == 3) {
@@ -90,6 +91,10 @@ public class interactionEventListener extends ListenerAdapter {
 
             case "current-prefs":
                 output_msg_private("Current timeouts:\n**warning 1**: " + warning_1 + " seconds\n**warning_2**: " + warning_2 + " minutes\n**Default Message**: " + default_warning_msg);
+                break;
+
+            case "roles":
+                output_msg_private(Objects.requireNonNull(event.getOption("assign-role")).getAsRole().getName());
                 break;
         }
     }
