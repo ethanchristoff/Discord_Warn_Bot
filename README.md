@@ -16,3 +16,5 @@ Overall, warn_bot is a useful tool for server moderation, helping to maintain a 
 4. Total number of warnings issued per user may be seen 
 5. Perma-bans and timeouts may be issued through the bot.
 6. Users may be limited from accessing other bots through the use of `warn_bot`.
+
+Interaction included in the bot may be customized through prompts, just ensure that the required priviledges are assigned to the bot beforehand. (the feature mentioned here will be included eventually as it is still a proposed project in the feature branch)
