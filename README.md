@@ -1,3 +1,5 @@
+![warnBot](https://github.com/ethanchristoff/Discord_Warn_Bot/assets/93596409/f7d072d1-a29d-4b9c-9267-d4584df3cd32)
+
 # warn_bot
 
 > You can add the script to a bot you issued by changing the token (which is an environmental variable) in the config files.
