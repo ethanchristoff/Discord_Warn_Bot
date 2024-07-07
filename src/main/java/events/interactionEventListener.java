@@ -1,5 +1,8 @@
 package events;
 
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -94,7 +97,12 @@ public class interactionEventListener extends ListenerAdapter {
                 break;
 
             case "roles":
-                output_msg_private(Objects.requireNonNull(event.getOption("assign-role")).getAsRole().getName());
+                long role_to_assign = Objects.requireNonNull(event.getOption("assign-role")).getAsLong();
+                User user_to_assign = Objects.requireNonNull(event.getOption("user-to-assign")).getAsUser();
+                Guild guild = event.getGuild();
+                Role role = guild.getRoleById(role_to_assign);
+                guild.addRoleToMember(user_to_assign,role).queue();
+                output_msg_private("Role assigned!");
                 break;
         }
     }
