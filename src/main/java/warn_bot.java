@@ -45,5 +45,11 @@ public class warn_bot {
                 .addOption(OptionType.USER,"user-to-assign","mentions the user to have a role assigned to",true)
                 .setGuildOnly(true)
                 .queue();
+
+        jda.upsertCommand("remove-role","removes a role from a user")
+                .addOption(OptionType.ROLE,"absolve-role","select the role to remove from the user",true)
+                .addOption(OptionType.USER,"user-to-absolve","select the user to have the role removed from",true)
+                .setGuildOnly(true)
+                .queue();
     }
 }

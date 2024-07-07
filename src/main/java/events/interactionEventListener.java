@@ -47,6 +47,8 @@ public class interactionEventListener extends ListenerAdapter {
             return;
         }
 
+        Guild guild = event.getGuild();
+
         switch (slashName) {
             case "warn":
                 User user = Objects.requireNonNull(event.getOption("username")).getAsUser();
@@ -99,10 +101,26 @@ public class interactionEventListener extends ListenerAdapter {
             case "roles":
                 long role_to_assign = Objects.requireNonNull(event.getOption("assign-role")).getAsLong();
                 User user_to_assign = Objects.requireNonNull(event.getOption("user-to-assign")).getAsUser();
-                Guild guild = event.getGuild();
-                Role role = guild.getRoleById(role_to_assign);
-                guild.addRoleToMember(user_to_assign,role).queue();
+                Role role_to_add = guild.getRoleById(role_to_assign);
+                guild.addRoleToMember(user_to_assign,role_to_add).queue();
                 output_msg_private("Role assigned!");
+                break;
+
+            case "remove-role":
+                long role_to_absolve = Objects.requireNonNull(event.getOption("absolve-role")).getAsLong();
+                User user_to_absolve = Objects.requireNonNull(event.getOption("user-to-absolve")).getAsUser();
+                Role role_to_remove = guild.getRoleById(role_to_absolve);
+                if (role_to_remove != null) {
+                    Member member = guild.getMember(user_to_absolve);
+                    if (member != null && member.getRoles().contains(role_to_remove)) {
+                        guild.removeRoleFromMember(member, role_to_remove).queue();
+                        output_msg_private("Role removed!");
+                    } else {
+                        output_msg_private("User does not have the specified role.");
+                    }
+                } else {
+                    output_msg_private("Role not found.");
+                }
                 break;
         }
     }
