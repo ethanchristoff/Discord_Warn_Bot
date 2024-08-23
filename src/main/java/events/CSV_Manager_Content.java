@@ -7,7 +7,7 @@ import java.util.List;
 import net.dv8tion.jda.api.entities.User;
 
 public class CSV_Manager_Content {
-    private String csvFile = "user_data.csv";
+    private final String csvFile = "user_data.csv";
 
     public CSV_Manager_Content(){
         File file = new File(csvFile);
@@ -120,9 +120,5 @@ public class CSV_Manager_Content {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void update_value(User user, int warnings, int warning_time){
-
     }
 }
