@@ -35,6 +35,8 @@ public class interactionEventListener extends ListenerAdapter {
         event.reply(value).setEphemeral(false).queue();
     }
 
+    private CSV_Manager_Content csv = new CSV_Manager_Content();
+
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         this.event = event;
@@ -49,36 +51,67 @@ public class interactionEventListener extends ListenerAdapter {
 
         Guild guild = event.getGuild();
 
+        boolean user_exists;
+
         switch (slashName) {
             case "warn":
                 User user = Objects.requireNonNull(event.getOption("username")).getAsUser();
-                int warnings = warningMap.getOrDefault(user, 0) + 1;
-                warningMap.put(user, warnings);
+                // int warnings = warningMap.getOrDefault(user, 0) + 1,total_timeouts = csv.read_data(user,"total_timeouts")==null ? 0:Integer.parseInt(csv.read_data(user,"total_timeouts"));
+                // warningMap.put(user, warnings);
+                int warnings,total_timeouts = csv.read_data(user,"total_timeouts")==null ? 0:Integer.parseInt(csv.read_data(user,"total_timeouts"));
+                user_exists = csv.read_data(user, "warnings") != null;
+
+                // Initialize warnings
+                if (user_exists) {
+                    // If user exists, get the current warnings and increment by 1
+                    warnings = Integer.parseInt(csv.read_data(user, "warnings")) + 1;
+                } else {
+                    // If user does not exist, initialize warnings to 1
+                    warnings = 1;
+                }
 
                 String warning = event.getOption("warning") != null ? Objects.requireNonNull(event.getOption("warning")).getAsString() : "";
                 String mention = user.getAsMention(); // Get the mention tag
-                if (warning.isEmpty())
+                if (warning.isEmpty()) {
                     output_msg_public(mention + " was warned | NO: **" + warnings + "** | MESSAGE: **" + default_warning_msg + "**");
-                else
+                    csv.write_line(user,warnings,default_warning_msg,total_timeouts);
+                }else{
                     output_msg_public(mention + " was warned | NO: **" + warnings + "** | MESSAGE: **" + warning + "**");
+                    csv.write_line(user,warnings,warning,total_timeouts);
+                }
 
                 // 3 warnings and the user is timed out for 10 seconds, 10 warnings = 10 minutes
                 if (warnings == 3) {
                     timeoutMap.put(user, 1); // Puts the user into the hashmap
                     scheduler.schedule(() -> timeoutMap.remove(user), warning_1, TimeUnit.SECONDS);
+                    total_timeouts++;
+                    csv.write_line(user,warnings,"REACHED TIMEOUT_1",total_timeouts);
                 } else if (warnings == 10) {
                     timeoutMap.put(user, 1);
                     scheduler.schedule(() -> timeoutMap.remove(user), warning_2, TimeUnit.MINUTES);
+                    total_timeouts++;
+                    csv.write_line(user,warnings,"REACHED TIMEOUT_2",total_timeouts);
                 }
                 break;
 
             case "check-warnings":
                 User checkUser = Objects.requireNonNull(event.getOption("username")).getAsUser();
-                int userWarnings = warningMap.getOrDefault(checkUser, 0);
+                user_exists = csv.read_data(checkUser, "warnings") != null;
+
+                // Initialize warnings
+                int userWarnings;
+                if (user_exists) {
+                    // If user exists, get the current warnings
+                    userWarnings = Integer.parseInt(csv.read_data(checkUser, "warnings"));
+                } else {
+                    // If user does not exist, initialize warnings to 0
+                    userWarnings = 0;
+                }
+                // int userWarnings = warningMap.getOrDefault(checkUser, 0);
                 if (userWarnings == 0) {
                     output_msg_private(checkUser.getName()+" has no warnings");
                 } else {
-                    output_msg_private(checkUser.getName()+" has " + userWarnings + " warnings");
+                    output_msg_private(checkUser.getName()+" has **" + userWarnings + "** warnings with their most recent warning being: **"+csv.read_data(checkUser,"Warning_Messages")+"**");
                 }
                 break;
 
