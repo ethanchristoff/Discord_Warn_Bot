@@ -23,7 +23,7 @@ public class CSV_Manager_Content {
 
                     // Optionally, write a header to the new CSV file
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                        writer.write("User,Warnings,Warning_Messages,total_timeouts"); // Example header
+                        writer.write("User,Warnings,Warning_Messages,total_timeouts,past_roles"); // Example header
                         writer.newLine();
                         System.out.println("Header written to the new CSV file.");
                     } catch (IOException e) {

@@ -1,6 +1,7 @@
 import events.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
@@ -11,6 +12,7 @@ public class warn_bot {
         JDABuilder jdaBuilder = JDABuilder.createDefault(token);
 
         JDA jda = jdaBuilder
+                .setActivity(Activity.watching("y'all get banned"))
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES)
                 .addEventListeners(new interactionEventListener())
                 .build();

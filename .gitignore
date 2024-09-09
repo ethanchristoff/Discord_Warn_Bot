@@ -11,6 +11,7 @@ target/
 *.iws
 *.iml
 *.ipr
+user_data.csv
 
 ### Eclipse ###
 .apt_generated
@@ -36,6 +37,3 @@ build/
 
 ### Mac OS ###
 .DS_Store
-
-# Exclude user data file
-user_data.csv

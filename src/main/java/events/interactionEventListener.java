@@ -132,7 +132,7 @@ public class interactionEventListener extends ListenerAdapter {
                 break;
 
             case "roles":
-                long role_to_assign = Objects.requireNonNull(event.getOption("assign-role")).getAsLong();
+                long role_to_assign  = Objects.requireNonNull(event.getOption("assign-role")).getAsLong();
                 User user_to_assign = Objects.requireNonNull(event.getOption("user-to-assign")).getAsUser();
                 Role role_to_add = guild.getRoleById(role_to_assign);
                 guild.addRoleToMember(user_to_assign,role_to_add).queue();
