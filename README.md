@@ -25,3 +25,8 @@ Interaction included in the bot may be customized through prompts, just ensure t
 ```html
 https://github.com/ethanchristoff/Discord_Warn_Bot.git
 ```
+
+# Bot Activation Request
+If you wish to activate the bot I've made and actered specifically to this bot, you may submit a link to your server with an intent in the form below:
+
+[https://bot-activation-form.netlify.app/]
